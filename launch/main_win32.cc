@@ -18,6 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     logger_sinks.clear();
     logger_sinks.push_back(std::make_shared<spdlog::sinks::msvc_sink_mt>());
+    logger_sinks.push_back(std::make_shared<spdlog::sinks::stderr_color_sink_mt>());
 
 #ifdef NDEBUG
     auto use_winconsole = commandline::hasOption("winconsole") && AllocConsole();

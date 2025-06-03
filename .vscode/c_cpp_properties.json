@@ -15,9 +15,11 @@
                 "_USE_MATH_DEFINES"
             ],
             "includePath": [
-                "${workspaceFolder}/external/eigen/include/",
+                "${workspaceFolder}/external/eigen/include",
                 "${workspaceFolder}/external/entt/include",
-                "${workspaceFolder}/external/spdlog/include/",
+                "${workspaceFolder}/external/spdlog/include",
+                "${workspaceFolder}/modules",
+                "${workspaceFolder}/game",
                 "${workspaceFolder}",
                 "${default}"
             ]

@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 project(QFortress LANGUAGES C CXX VERSION 0.0.1)
 
+## Add cmake include directories
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -22,13 +25,13 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 ## Output binaries into build root
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
-add_subdirectory(external)
-
 add_subdirectory(common)
+add_subdirectory(external)
 add_subdirectory(game/client)
 add_subdirectory(game/server)
 add_subdirectory(game/shared)
 add_subdirectory(launch)
+add_subdirectory(modules)
 
 install(DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/baseqf" DESTINATION ".")
 install(FILES "${CMAKE_CURRENT_LIST_DIR}/gameinfo.yml" DESTINATION ".")

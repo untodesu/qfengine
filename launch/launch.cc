@@ -2,12 +2,12 @@
 
 #include "launch/launch.hh"
 
+#include "game/client/main.hh"
+
 void launch::start(void)
 {
-    spdlog::info("ADASDASDASDADSDAS");
-
 #if defined(QF_CLIENT)
-    // TODO: run client
+    client::main();
 #elif defined(QF_SERVER)
     // TODO: run server
 #else
