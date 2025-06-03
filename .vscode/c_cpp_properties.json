@@ -1,0 +1,26 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "QFortress",
+            "cppStandard": "c++20",
+            "cStandard": "c17",
+            "defines": [
+                "QF_CLIENT",
+                "QF_SERVER",
+                "SPDLOG_USE_STD_FORMAT",
+                "GLFW_INCLUDE_NONE",
+                "NOMINMAX",
+                "_CRT_SECURE_NO_WARNINGS",
+                "_USE_MATH_DEFINES"
+            ],
+            "includePath": [
+                "${workspaceFolder}/external/eigen/include/",
+                "${workspaceFolder}/external/entt/include",
+                "${workspaceFolder}/external/spdlog/include/",
+                "${workspaceFolder}",
+                "${default}"
+            ]
+        }
+    ]
+}

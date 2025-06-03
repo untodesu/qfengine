@@ -1,0 +1,13 @@
+/.vscode/*
+!/.vscode/c_cpp_properties.json
+/core/version.hh
+/build/
+/build32/
+/build64/
+/conf/
+/*.log
+/*.ini
+/*.dll
+/*.exe
+/*.lib
+/*.so
