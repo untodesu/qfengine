@@ -1,0 +1,10 @@
+#include "game/server/pch.hh"
+
+#include "plugins/server_plugins.hh"
+
+${QF_SERVER_PLUGINS_DECL};
+
+void server_plugins::invoke(qf::PluginCallback callback)
+{
+    ${QF_SERVER_PLUGINS_INVOKE};
+}

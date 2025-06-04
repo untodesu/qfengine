@@ -20,7 +20,7 @@ void config::Map::set(std::string_view key, const std::string& value)
 
 void config::Map::set(const char* key, const std::string& value)
 {
-    QF_ASSERT(key);
+    qf_assert(key);
 
     if(auto configValue = findMutable(key)) {
         configValue->rawSet(value.c_str());
@@ -36,7 +36,7 @@ const char* config::Map::get(std::string_view key, const char* fallback) const
 
 const char* config::Map::get(const char* key, const char* fallback) const
 {
-    QF_ASSERT(key);
+    qf_assert(key);
 
     if(auto configValue = find(key))
         return configValue->rawGet();
@@ -54,7 +54,7 @@ const config::IConfigValue* config::Map::find(std::string_view key) const
 
 const config::IConfigValue* config::Map::find(const char* key) const
 {
-    QF_ASSERT(key);
+    qf_assert(key);
 
     auto it = m_values.find(key);
 
@@ -65,7 +65,7 @@ const config::IConfigValue* config::Map::find(const char* key) const
 
 void config::Map::loadFrom(std::istream& stream)
 {
-    QF_ASSERT(stream.good());
+    qf_assert(stream.good());
 
     std::string line;
     std::string kv_string;
@@ -109,7 +109,7 @@ void config::Map::loadFrom(std::istream& stream)
 
 void config::Map::saveTo(std::ostream& stream) const
 {
-    QF_ASSERT(stream.good());
+    qf_assert(stream.good());
 
     auto curtime = std::time(nullptr);
 

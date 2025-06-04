@@ -1,0 +1,10 @@
+#include "game/shared/pch.hh"
+
+#include "plugins/shared_plugins.hh"
+
+${QF_SHARED_PLUGINS_DECL};
+
+void shared_plugins::invoke(qf::PluginCallback callback)
+{
+    ${QF_SHARED_PLUGINS_INVOKE};
+}

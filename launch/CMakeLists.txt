@@ -1,5 +1,3 @@
-include(QFengineProjects)
-
 function(qf_add_launch_executable target_name)
     qf_add_executable(${target_name}
         "${CMAKE_CURRENT_SOURCE_DIR}/launch.cc"

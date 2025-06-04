@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 project(QFortress LANGUAGES C CXX VERSION 0.0.1)
 
 ## Add cmake include directories
@@ -25,21 +25,63 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 ## Output binaries into build root
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
-add_subdirectory(common)
+## Helper function to figure out common things across
+## all the targets in the entire engine's infrastructure
+function(qf_setup_target target_name)
+    target_compile_features(${target_name} PUBLIC cxx_std_20)
+    target_include_directories(${target_name} PUBLIC "${PROJECT_SOURCE_DIR}")
+    
+    if(WIN32)
+        target_compile_definitions(${target_name} PUBLIC _CRT_SECURE_NO_WARNINGS)
+        target_compile_definitions(${target_name} PUBLIC _USE_MATH_DEFINES)
+        target_compile_definitions(${target_name} PUBLIC NOMINMAX)
+    endif()
+endfunction()
+
+## Helper function to make executables
+function(qf_add_executable target_name)
+    add_executable(${target_name} ${ARGN})
+    qf_setup_target(${target_name})
+endfunction()
+
+## Helper function to make shared libraries
+function(qf_add_shared_library target_name)
+    add_library(${target_name} SHARED ${ARGN})
+    target_compile_definitions(${target_name} PRIVATE QF_BUILD_DLL)
+    qf_setup_target(${target_name})
+endfunction()
+
+## Helper function to make static libraries
+function(qf_add_static_library target_name)
+    add_library(${target_name} STATIC ${ARGN})
+    target_compile_definitions(${target_name} PRIVATE QF_BUILD_LIB)
+    qf_setup_target(${target_name})
+endfunction()
+
+## Add dependency libraries
 add_subdirectory(external)
+
+## Add common engine sources
+add_subdirectory(common)
+
+## Add basic engine sources
 add_subdirectory(game/client)
 add_subdirectory(game/server)
 add_subdirectory(game/shared)
+
+## Add engine plugins
+add_subdirectory(plugins)
+
+## Add launcher sources
 add_subdirectory(launch)
-add_subdirectory(modules)
 
-install(DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/baseqf" DESTINATION ".")
-install(FILES "${CMAKE_CURRENT_LIST_DIR}/gameinfo.yml" DESTINATION ".")
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/baseqf" DESTINATION ".")
+install(FILES "${PROJECT_SOURCE_DIR}/gameinfo.yml" DESTINATION ".")
 
-set(CPACK_PACKAGE_NAME "qfortress")
+set(CPACK_PACKAGE_NAME "qfengine")
 set(CPACK_PACKAGE_VENDOR "untodesu")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Class-based first-person shooter")
-set(CPACK_PACKAGE_CONTACT "https://github.com/untodesu/qfortress/issues")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Engine for a class-based first-person shooter")
+set(CPACK_PACKAGE_CONTACT "https://github.com/untodesu/qfengine/issues")
 
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})

@@ -2,12 +2,11 @@
 
 #include "client/main.hh"
 
-#include "client/clientmodule.hh"
-#include "shared/sharedmodule.hh"
-
-extern qf::ClientModule qfortress_client;
+#include "plugins/client_plugins.hh"
+#include "plugins/shared_plugins.hh"
 
 void client::main(void)
 {
-    qf::ClientModule::invokeAll(qf::ModuleFunction::InitializeEarly);
+    shared_plugins::invoke(qf::PluginCallback::Initialize);
+    client_plugins::invoke(qf::PluginCallback::Initialize);
 }

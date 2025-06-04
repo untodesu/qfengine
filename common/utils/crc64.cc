@@ -81,8 +81,8 @@ constexpr static const std::uint64_t CRC64_TABLE[256] = {
 
 std::uint64_t utils::CRC64(const void* buffer, std::size_t size, std::uint64_t start)
 {
-    QF_ASSERT(buffer);
-    QF_ASSERT(size > 0);
+    qf_assert(buffer);
+    qf_assert(size > 0);
 
     auto data = reinterpret_cast<const std::uint8_t*>(buffer);
 
@@ -95,14 +95,14 @@ std::uint64_t utils::CRC64(const void* buffer, std::size_t size, std::uint64_t s
 
 std::uint64_t utils::CRC64(const std::vector<std::byte>& buffer, std::uint64_t start)
 {
-    QF_ASSERT(!buffer.empty());
+    qf_assert(!buffer.empty());
 
     return CRC64(buffer.data(), buffer.size(), start);
 }
 
 std::uint64_t utils::CRC64(const std::string& buffer, std::uint64_t start)
 {
-    QF_ASSERT(!buffer.empty());
+    qf_assert(!buffer.empty());
 
     return CRC64(buffer.data(), buffer.size(), start);
 }
