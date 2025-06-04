@@ -4,4 +4,6 @@
 
 #include <shared/pch.hh>
 
+#include <GLFW/glfw3.h>
+
 #endif // CLIENT_PCH_HH

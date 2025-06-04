@@ -20,8 +20,11 @@ public:
     const IConfigValue* find(std::string_view key) const;
     const IConfigValue* find(const char* key) const;
 
-    void loadFrom(std::istream& stream);
+    void loadFrom(std::istream& stream, bool append = false);
     void saveTo(std::ostream& stream) const;
+
+    bool loadFromFile(const std::string& path, bool append = false);
+    bool saveToFile(const std::string& path) const;
 
     void forEachValue(const std::function<void(const std::string&, const IConfigValue&)>& callback) const;
 

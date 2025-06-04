@@ -63,9 +63,13 @@ const config::IConfigValue* config::Map::find(const char* key) const
     return nullptr;
 }
 
-void config::Map::loadFrom(std::istream& stream)
+void config::Map::loadFrom(std::istream& stream, bool append)
 {
     qf_assert(stream.good());
+
+    if(!append) {
+        m_values.clear();
+    }
 
     std::string line;
     std::string kv_string;
@@ -120,6 +124,18 @@ void config::Map::saveTo(std::ostream& stream) const
     for(const auto& [key, value] : m_values) {
         stream << key << " = " << value->rawGet() << std::endl;
     }
+}
+
+bool config::Map::loadFromFile(const std::string& path, bool append)
+{
+    spdlog::warn("config::Map:loadFromFile: not implemented");
+    return false;
+}
+
+bool config::Map::saveToFile(const std::string& path) const
+{
+    spdlog::warn("config::Map:saveToFile: not implemented");
+    return false;
 }
 
 config::IConfigValue* config::Map::findMutable(std::string_view key)

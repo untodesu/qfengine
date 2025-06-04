@@ -18,6 +18,8 @@ qf_add_static_library(qfengine_common
     "${CMAKE_CURRENT_LIST_DIR}/commandline.hh"
     "${CMAKE_CURRENT_LIST_DIR}/module.cc"
     "${CMAKE_CURRENT_LIST_DIR}/module.hh"
-    "${CMAKE_CURRENT_LIST_DIR}/pch.hh")
+    "${CMAKE_CURRENT_LIST_DIR}/pch.hh"
+    "${CMAKE_CURRENT_LIST_DIR}/threading.cc"
+    "${CMAKE_CURRENT_LIST_DIR}/threading.hh")
 target_precompile_headers(qfengine_common PUBLIC "${CMAKE_CURRENT_LIST_DIR}/pch.hh")
-target_link_libraries(qfengine_common PUBLIC eigen spdlog)
+target_link_libraries(qfengine_common PUBLIC eigen spdlog thread_pool)

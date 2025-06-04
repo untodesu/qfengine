@@ -4,4 +4,7 @@
 
 #include <common/pch.hh>
 
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
+
 #endif // SHARED_PCH_HH

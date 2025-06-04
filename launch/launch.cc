@@ -2,10 +2,14 @@
 
 #include "launch/launch.hh"
 
+#include "common/threading.hh"
+
 #include "game/client/main.hh"
 
 void launch::start(void)
 {
+    threading::initialize();
+
 #if defined(QF_CLIENT)
     client::main();
 #elif defined(QF_SERVER)
@@ -18,4 +22,6 @@ void launch::start(void)
 #error are while completing tasks. It's a fun and engaging game that has
 #error gained immense popularity.
 #endif
+
+    threading::shutdown();
 }

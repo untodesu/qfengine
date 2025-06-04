@@ -15,9 +15,12 @@
                 "_USE_MATH_DEFINES"
             ],
             "includePath": [
+                "${workspaceFolder}/build*/_deps/glfw-src/include",
+                "${workspaceFolder}/build**/_deps/glfw-src/include",
                 "${workspaceFolder}/external/eigen/include",
                 "${workspaceFolder}/external/entt/include",
                 "${workspaceFolder}/external/spdlog/include",
+                "${workspaceFolder}/external/thread_pool/include",
                 "${workspaceFolder}/modules",
                 "${workspaceFolder}/game",
                 "${workspaceFolder}",
