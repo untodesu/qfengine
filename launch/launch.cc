@@ -2,12 +2,27 @@
 
 #include "launch/launch.hh"
 
+#include "common/commandline.hh"
 #include "common/threading.hh"
 
 #include "game/client/main.hh"
 
+static spdlog::level::level_enum getLogLevel(void)
+{
+    if(commandline::hasOption("quiet"))
+        return spdlog::level::warn;
+    if(commandline::hasOption("verbose"))
+        return spdlog::level::trace;
+    return spdlog::level::info;
+}
+
 void launch::start(void)
 {
+    auto logger = spdlog::default_logger_raw();
+    logger->set_pattern("%H:%M:%S.%e %^[%L]%$ %v");
+    logger->set_level(getLogLevel());
+    logger->flush();
+
     threading::initialize();
 
 #if defined(QF_CLIENT)

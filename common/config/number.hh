@@ -2,7 +2,7 @@
 #define COMMON_CONFIG_NUMBER_HH
 #pragma once
 
-#include "common/config/value.h"
+#include "common/config/value.hh"
 
 namespace config
 {
@@ -51,7 +51,7 @@ const char* config::Number<T>::rawGet(void) const
 template<config::NumberType T>
 void config::Number<T>::rawSet(const char* value)
 {
-    std::ostringstream stream(value);
+    std::istringstream stream(value);
 
     stream >> m_value;
     m_value = std::clamp(m_value, m_min, m_max);

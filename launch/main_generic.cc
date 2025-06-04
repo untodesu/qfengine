@@ -6,13 +6,16 @@
 
 int main(int argc, char** argv)
 {
+    auto logger = spdlog::default_logger_raw();
+    logger->set_level(spdlog::level::trace);
+    logger->set_pattern("%v");
+
+    auto& sinks = logger->sinks();
+
+    sinks.clear();
+    sinks.push_back(std::make_shared<spdlog::sinks::stderr_color_sink_mt>());
+
     commandline::parse(argc, argv);
-
-    auto default_logger = spdlog::default_logger_raw();
-    auto& logger_sinks = default_logger->sinks();
-
-    logger_sinks.clear();
-    logger_sinks.push_back(std::make_shared<spdlog::sinks::stderr_color_sink_mt>());
 
     try {
         launch::start();

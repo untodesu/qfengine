@@ -3,3 +3,5 @@
 ## reference on how the entire system works
 
 # add_subdirectory(example)
+
+add_subdirectory(perflog)

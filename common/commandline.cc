@@ -42,9 +42,9 @@ void commandline::parse(int argc, char** argv)
                 i = next_i; // Skip the argument
                 continue;
             }
-
-            s_options.insert_or_assign(option_string, std::string());
         }
+
+        s_options.insert_or_assign(option_string, std::string());
     }
 }
 

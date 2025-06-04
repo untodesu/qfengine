@@ -11,14 +11,17 @@ static void showErrorMessage(const char* message)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
+    auto logger = spdlog::default_logger_raw();
+    logger->set_level(spdlog::level::trace);
+    logger->set_pattern("%v");
+
     commandline::parse(__argc, __argv);
 
-    auto default_logger = spdlog::default_logger_raw();
-    auto& logger_sinks = default_logger->sinks();
+    auto& sinks = logger->sinks();
 
-    logger_sinks.clear();
-    logger_sinks.push_back(std::make_shared<spdlog::sinks::msvc_sink_mt>());
-    logger_sinks.push_back(std::make_shared<spdlog::sinks::stderr_color_sink_mt>());
+    sinks.clear();
+    sinks.push_back(std::make_shared<spdlog::sinks::msvc_sink_mt>());
+    sinks.push_back(std::make_shared<spdlog::sinks::stderr_color_sink_mt>());
 
 #ifdef NDEBUG
     auto use_winconsole = commandline::hasOption("winconsole") && AllocConsole();
@@ -27,7 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 #endif
 
     if(use_winconsole) {
-        logger_sinks.push_back(std::make_shared<spdlog::sinks::wincolor_stderr_sink_mt>());
+        sinks.push_back(std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>());
     }
 
     try {
