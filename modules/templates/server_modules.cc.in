@@ -1,0 +1,10 @@
+#include "game/server/pch.hh"
+
+#include "modules/server_modules.hh"
+
+${QF_SERVER_MODULES_DECL};
+
+void server_modules::invoke(qf::ModuleCallback callback)
+{
+    ${QF_SERVER_MODULES_INVOKE};
+}

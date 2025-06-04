@@ -1,8 +1,8 @@
 /.vscode/*
 !/.vscode/c_cpp_properties.json
-/game/client/plugins.cc
-/game/server/plugins.cc
-/game/shared/plugins.cc
+/game/client/modules.cc
+/game/server/modules.cc
+/game/shared/modules.cc
 /build/
 /build32/
 /build64/

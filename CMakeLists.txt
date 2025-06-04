@@ -69,8 +69,8 @@ add_subdirectory(game/client)
 add_subdirectory(game/server)
 add_subdirectory(game/shared)
 
-## Add engine plugins
-add_subdirectory(plugins)
+## Add engine modules
+add_subdirectory(modules)
 
 ## Add launcher sources
 add_subdirectory(launch)
