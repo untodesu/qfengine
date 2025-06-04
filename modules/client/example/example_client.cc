@@ -54,8 +54,7 @@ static void clientExample_layout(void)
 
 // This is the entry point for the module; it is
 // pulled by the generated code and registered at link time;
-// NOTENOTE: the name of the variable must match the target name
-qf::Module example_client({
+QF_IMPLEMENT_MODULE({
     { qf::ModuleCallback::InitializeEarly, &clientExample_initializeEarly },
     { qf::ModuleCallback::Initialize, &clientExample_initialize },
     { qf::ModuleCallback::ShutdownEarly, &clientExample_shutdownEarly },

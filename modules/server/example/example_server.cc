@@ -34,8 +34,7 @@ static void serverExample_fixedUpdateLate(void)
 
 // This is the entry point for the module; it is
 // pulled by the generated code and registered at link time;
-// NOTENOTE: the name of the variable must match the target name
-qf::Module example_server({
+QF_IMPLEMENT_MODULE({
     { qf::ModuleCallback::InitializeEarly, &serverExample_initializeEarly },
     { qf::ModuleCallback::Initialize, &serverExample_initialize },
     { qf::ModuleCallback::ShutdownEarly, &serverExample_shutdownEarly },

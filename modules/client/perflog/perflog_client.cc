@@ -30,7 +30,7 @@ static void perflog_updateLate(void)
     }
 }
 
-qf::Module perflog_client({
+QF_IMPLEMENT_MODULE({
     { qf::ModuleCallback::InitializeEarly, &perflog_initializeEarly },
     { qf::ModuleCallback::Initialize, &perflog_initialize },
     { qf::ModuleCallback::UpdateLate, &perflog_updateLate },

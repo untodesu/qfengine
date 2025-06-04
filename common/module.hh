@@ -36,4 +36,10 @@ private:
 };
 } // namespace qf
 
+#if defined(QF_MODULE) && defined(QF_MODULE_NAME)
+#define QF_IMPLEMENT_MODULE(...) [[maybe_unused]] qf::Module QF_MODULE_NAME(__VA_ARGS__)
+#else
+#define QF_IMPLEMENT_MODULE(...)
+#endif
+
 #endif // COMMON_MODULE_HH
