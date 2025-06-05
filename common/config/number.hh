@@ -6,8 +6,11 @@
 
 namespace config
 {
-template<typename T> concept NumberType = std::is_integral_v<T> || std::is_floating_point_v<T>;
+template<typename T> concept NumberType = std::integral<T> || std::floating_point<T>;
+} // namespace config
 
+namespace config
+{
 template<NumberType T>
 class Number final : public IConfigValue {
 public:
