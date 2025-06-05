@@ -1,12 +1,9 @@
 /.vscode/*
 !/.vscode/c_cpp_properties.json
-/game/client/modules.cc
-/game/server/modules.cc
-/game/shared/modules.cc
 /build/
 /build32/
 /build64/
-/conf/
+/*.conf
 /*.log
 /*.ini
 /*.dll

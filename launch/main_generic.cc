@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     commandline::parse(argc, argv);
 
     try {
-        launch::start();
+        launch::start(argc, argv);
         return EXIT_SUCCESS;
     }
     catch(const std::exception& ex) {

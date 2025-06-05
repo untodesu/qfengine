@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
 
     try {
-        launch::start();
+        launch::start(__argc, __argv);
         return EXIT_SUCCESS;
     }
     catch(const std::exception& ex) {

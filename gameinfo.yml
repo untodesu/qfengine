@@ -1,6 +1,0 @@
-game: QFortress
-author: untodesu
-version: ${QF_VERSION}
-search_paths:
-  - ${CWD}/baseqf
-  - ${CWD}/qfortress

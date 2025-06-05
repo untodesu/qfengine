@@ -4,6 +4,7 @@
 
 #include "common/config/value.hh"
 #include "common/debug/assert.hh"
+#include "common/utils/physfs.hh"
 #include "common/utils/string.hh"
 
 void config::Map::add(std::string_view key, IConfigValue& value)
@@ -63,7 +64,7 @@ const config::IConfigValue* config::Map::find(const char* key) const
     return nullptr;
 }
 
-void config::Map::loadFrom(std::istream& stream, bool append)
+void config::Map::loadFromStream(std::istream& stream, bool append)
 {
     qf_assert(stream.good());
 
@@ -94,7 +95,7 @@ void config::Map::loadFrom(std::istream& stream, bool append)
         auto separator = kv_string.find('=');
 
         if(separator == std::string::npos) {
-            spdlog::warn("config::Map::loadFrom: malformed line: '{}'", kv_string);
+            spdlog::warn("config: malformed line: '{}'", kv_string);
             continue;
         }
 
@@ -105,37 +106,46 @@ void config::Map::loadFrom(std::istream& stream, bool append)
             configValue->rawSet(kv_value.c_str());
         }
         else {
-            spdlog::warn("config::Map::loadFrom: unknown key '{}', ignoring", kv_name);
+            spdlog::warn("config: unknown key '{}', ignoring", kv_name);
             continue;
         }
     }
 }
 
-void config::Map::saveTo(std::ostream& stream) const
+void config::Map::saveToStream(std::ostream& stream) const
 {
     qf_assert(stream.good());
 
     auto curtime = std::time(nullptr);
 
-    stream << "# QFortress configuration file" << std::endl;
+    stream << "# QFengine configuration file" << std::endl;
     stream << "# Generated at: " << std::put_time(std::gmtime(&curtime), "%Y-%m-%d %H:%M:%S") << std::endl;
-    stream << "# WARNING: changes will be overwritten next time the game is run" << std::endl << std::endl;
+    stream << "# WARNING: changes will be overwritten" << std::endl << std::endl;
 
     for(const auto& [key, value] : m_values) {
         stream << key << " = " << value->rawGet() << std::endl;
     }
 }
 
-bool config::Map::loadFromFile(const std::string& path, bool append)
+bool config::Map::loadFromFile(const std::filesystem::path& path, bool append)
 {
-    spdlog::warn("config::Map:loadFromFile: not implemented");
+    std::istringstream stream;
+
+    if(utils::readFileStream(path, stream)) {
+        loadFromStream(stream, append);
+        return true;
+    }
+
     return false;
 }
 
-bool config::Map::saveToFile(const std::string& path) const
+bool config::Map::saveToFile(const std::filesystem::path& path) const
 {
-    spdlog::warn("config::Map:saveToFile: not implemented");
-    return false;
+    std::ostringstream stream;
+
+    saveToStream(stream);
+
+    return utils::writeFileStream(path, stream);
 }
 
 config::IConfigValue* config::Map::findMutable(std::string_view key)

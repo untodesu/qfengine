@@ -4,7 +4,7 @@
 
 namespace launch
 {
-void start(void);
+void start(int argc, char** argv);
 } // namespace launch
 
 #endif // LAUNCH_LAUNCH_HH

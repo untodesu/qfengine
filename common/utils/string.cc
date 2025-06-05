@@ -37,6 +37,36 @@ std::vector<std::string> utils::split(const std::string& string, const std::stri
     return result;
 }
 
+std::string utils::replaceAll(const std::string& string, const std::string& pattern, const std::string& with)
+{
+    std::string result(string);
+
+    while(true) {
+        auto index = result.find(pattern);
+
+        if(index == std::string::npos) {
+            // No more pattern occurences
+            // can be found in the string
+            break;
+        }
+
+        result.replace(index, pattern.size(), with);
+    }
+
+    return result;
+}
+
+std::string utils::replaceMap(const std::string& string, const std::unordered_map<std::string, std::string>& lut)
+{
+    std::string result(string);
+
+    for(auto& it : lut) {
+        result = utils::replaceAll(result, it.first, it.second);
+    }
+
+    return result;
+}
+
 std::string utils::trimWhitespace(const std::string& string)
 {
     auto su = string.find_first_not_of(WHITESPACE_CHARS);

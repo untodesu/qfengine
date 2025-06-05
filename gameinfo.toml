@@ -1,0 +1,6 @@
+game = "QFengine Base"
+author = "untodesu"
+
+[filesystem]
+write_location = "${GAMEDIR}"
+search_paths = ["${GAMEDIR}/baseqf"]

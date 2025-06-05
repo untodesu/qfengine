@@ -3,6 +3,7 @@
 #include "client/main.hh"
 
 #include "common/config/map.hh"
+#include "common/debug/assert.hh"
 #include "common/utils/epoch.hh"
 
 #include "client/game.hh"
@@ -21,9 +22,7 @@ void client::main(void)
     glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
 
-    if(!glfwInit()) {
-        throw std::runtime_error("GLFW: glfwInit() failed");
-    }
+    qf_force_assert_msg(glfwInit(), "GLFW: glfwInit() failed");
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -36,10 +35,7 @@ void client::main(void)
 #endif
 
     globals::window = glfwCreateWindow(640, 480, "QFengine", nullptr, nullptr);
-
-    if(!globals::window) {
-        throw std::runtime_error("GLFW: glfwCreateWindow() failed");
-    }
+    qf_force_assert_msg(globals::window, "GLFW: glfwCreateWindow() failed");
 
     glfwMakeContextCurrent(globals::window);
     glfwSwapInterval(1);

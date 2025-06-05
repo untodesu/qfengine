@@ -4,6 +4,7 @@
 
 #include "common/commandline.hh"
 #include "common/threading.hh"
+#include "common/utils/physfs.hh"
 
 #include "game/client/main.hh"
 
@@ -16,12 +17,16 @@ static spdlog::level::level_enum getLogLevel(void)
     return spdlog::level::info;
 }
 
-void launch::start(void)
+void launch::start(int argc, char** argv)
 {
     auto logger = spdlog::default_logger_raw();
     logger->set_pattern("%H:%M:%S.%e %^[%L]%$ %v");
     logger->set_level(getLogLevel());
     logger->flush();
+
+    if(!PHYSFS_init(argv[0])) {
+        throw std::runtime_error(std::format("PhysFS: init failed: {}", utils::getPhysfsError()));
+    }
 
     threading::initialize();
 
@@ -39,4 +44,8 @@ void launch::start(void)
 #endif
 
     threading::shutdown();
+
+    if(!PHYSFS_deinit()) {
+        throw std::runtime_error(std::format("PhysFS: deinit failed: {}", utils::getPhysfsError()));
+    }
 }

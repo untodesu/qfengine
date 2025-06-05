@@ -34,6 +34,10 @@
 
 #include <Eigen/Eigen>
 
+#include <physfs.h>
+
 #include <spdlog/spdlog.h>
+
+#include <toml.h>
 
 #endif // COMMON_PCH_HH

@@ -2,23 +2,28 @@
 #define COMMON_DEBUG_ASSERT_HH
 #pragma once
 
-#define QF_FORCE_ASSERT(condition, message)                                                                                    \
-    do {                                                                                                                       \
-        if(!(condition)) {                                                                                                     \
-            auto error_message = std::format("Assertion failed: [{}] at {}:{} - {}", #condition, __FILE__, __LINE__, message); \
-            spdlog::critical(error_message);                                                                                   \
-            throw std::runtime_error(error_message);                                                                           \
-        }                                                                                                                      \
+#define qf_assert_base(condition, fmt, ...)                                                                      \
+    do {                                                                                                         \
+        if(!(condition)) {                                                                                       \
+            auto file_name = std::filesystem::path(__FILE__).filename().string();                                \
+            auto message = std::format((fmt), __VA_ARGS__);                                                      \
+            spdlog::critical("debug: assertion failed: {} [{}:{}]", message, file_name, __LINE__);               \
+            throw std::runtime_error(std::format("assertion failed: {} [{}:{}]", message, file_name, __LINE__)); \
+        }                                                                                                        \
     } while(false)
 
-#if defined(QF_NO_ASSERT) || defined(NDEBUG)
-#define qf_assert(condition)               static_cast<void>(condition)
-#define qf_assert_msg(condition, message)  static_cast<void>(condition)
-#define qf_assert_fmt(condition, fmt, ...) static_cast<void>(condition)
+#ifdef NDEBUG
+#define qf_assert_fmg(x, fmt, ...) static_cast<void>(x)
+#define qf_assert_msg(x, msg)      static_cast<void>(x)
+#define qf_assert(x)               static_cast<void>(x)
 #else
-#define qf_assert(condition)               QF_FORCE_ASSERT(condition, std::string())
-#define qf_assert_msg(condition, message)  QF_FORCE_ASSERT(condition, std::string(message))
-#define qf_assert_fmt(condition, fmt, ...) QF_FORCE_ASSERT(condition, std::format(fmt, __VA_ARGS__))
-#endif // QF_NO_ASSERT
+#define qf_assert_fmt(x, fmt, ...) qf_assert_base((x), (fmt), __VA_ARGS__)
+#define qf_assert_msg(x, msg)      qf_assert_base((x), "{}", (msg))
+#define qf_assert(x)               qf_assert_base((x), "{}", (#x))
+#endif
+
+#define qf_force_assert_fmt(x, fmt, ...) qf_assert_base((x), (fmt), __VA_ARGS__)
+#define qf_force_assert_msg(x, msg)      qf_assert_base((x), "{}", (msg))
+#define qf_force_assert(x)               qf_assert_base((x), "{}", (#x))
 
 #endif // COMMON_DEBUG_ASSERT_HH

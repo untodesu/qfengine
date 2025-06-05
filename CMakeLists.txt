@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
-project(QFortress LANGUAGES C CXX VERSION 0.0.1)
+project(QFengine LANGUAGES C CXX VERSION 0.0.1)
 
 ## Add cmake include directories
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "cmake")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

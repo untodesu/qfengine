@@ -1,7 +1,9 @@
 add_subdirectory(eigen)
 add_subdirectory(entt)
+add_subdirectory(physfs)
 add_subdirectory(spdlog)
 add_subdirectory(thread_pool)
+add_subdirectory(tomlc99)
 
 find_package(glfw3 3.4 QUIET)
 

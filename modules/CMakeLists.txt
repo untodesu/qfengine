@@ -14,9 +14,9 @@ set_property(GLOBAL PROPERTY QF_SHARED_MODULES_INVOKE)
 
 function(qf_add_module target_name)
     qf_add_static_library(${target_name} ${ARGN})
-    target_compile_definitions(${target_name} PRIVATE QF_MODULE)
+    target_compile_definitions(${target_name} PRIVATE QF_MODULE=1)
     target_compile_definitions(${target_name} PRIVATE QF_MODULE_NAME=${target_name})
-    target_compile_definitions(${target_name} PRIVATE ${QF_MODULE_DEFINE})
+    target_compile_definitions(${target_name} PRIVATE ${QF_MODULE_DEFINE}=1)
     target_include_directories(${target_name} PRIVATE "${PROJECT_SOURCE_DIR}/game")
     target_include_directories(${target_name} PRIVATE "${PROJECT_SOURCE_DIR}/modules")
 

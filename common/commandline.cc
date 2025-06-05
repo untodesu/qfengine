@@ -2,6 +2,8 @@
 
 #include "common/commandline.hh"
 
+#include "common/debug/assert.hh"
+
 constexpr static char OPTION_PREFIX = '-';
 
 static std::unordered_map<std::string, std::string> s_options;
@@ -23,6 +25,9 @@ static inline std::string getOptionString(const std::string& string)
 
 void commandline::parse(int argc, char** argv)
 {
+    qf_assert(argc >= 1);
+    qf_assert(argv != nullptr);
+
     for(int i = 1; i < argc; ++i) {
         std::string option_argv(argv[i]);
 

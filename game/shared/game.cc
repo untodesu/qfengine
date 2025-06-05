@@ -2,10 +2,17 @@
 
 #include "shared/game.hh"
 
+#include "shared/gameinfo.hh"
+
 #include "modules/shared_modules.hh"
 
 void shared_game::initializeEarly(void)
 {
+    gameinfo::initializeEarly();
+
+    spdlog::info("gameinfo: game_name: {}", gameinfo::game_name);
+    spdlog::info("gameinfo: game_author: {}", gameinfo::game_author);
+
     shared_modules::invoke(qf::ModuleCallback::InitializeEarly);
 }
 
