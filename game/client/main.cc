@@ -4,6 +4,7 @@
 
 #include "common/config/map.hh"
 #include "common/debug/assert.hh"
+#include "common/resource/image.hh"
 #include "common/utils/epoch.hh"
 
 #include "client/game.hh"
@@ -58,6 +59,18 @@ void client::main(void)
     client_game::initialize();
 
     render_impl::initializeLate();
+
+    resource::Image icon;
+
+    if(icon.load("icon.png")) {
+        GLFWimage icon_image;
+        icon_image.width = icon.getWidth();
+        icon_image.height = icon.getHeight();
+        icon_image.pixels = const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>(icon.getPixels()));
+        glfwSetWindowIcon(globals::window, 1, &icon_image);
+    }
+
+    icon.unload();
 
     std::uint64_t last_curtime = globals::curtime;
     std::uint64_t fixed_accumulator, fixed_frames;

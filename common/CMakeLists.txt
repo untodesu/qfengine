@@ -8,6 +8,8 @@ qf_add_static_library(qfengine_common
     "${CMAKE_CURRENT_LIST_DIR}/config/string.hh"
     "${CMAKE_CURRENT_LIST_DIR}/config/value.hh"
     "${CMAKE_CURRENT_LIST_DIR}/debug/assert.hh"
+    "${CMAKE_CURRENT_LIST_DIR}/mixin/nocopy.hh"
+    "${CMAKE_CURRENT_LIST_DIR}/mixin/nomove.hh"
     "${CMAKE_CURRENT_LIST_DIR}/utils/crc64.cc"
     "${CMAKE_CURRENT_LIST_DIR}/utils/crc64.hh"
     "${CMAKE_CURRENT_LIST_DIR}/utils/epoch.cc"
@@ -16,6 +18,8 @@ qf_add_static_library(qfengine_common
     "${CMAKE_CURRENT_LIST_DIR}/utils/physfs.hh"
     "${CMAKE_CURRENT_LIST_DIR}/utils/string.cc"
     "${CMAKE_CURRENT_LIST_DIR}/utils/string.hh"
+    "${CMAKE_CURRENT_LIST_DIR}/resource/image.cc"
+    "${CMAKE_CURRENT_LIST_DIR}/resource/image.hh"
     "${CMAKE_CURRENT_LIST_DIR}/commandline.cc"
     "${CMAKE_CURRENT_LIST_DIR}/commandline.hh"
     "${CMAKE_CURRENT_LIST_DIR}/module.cc"
@@ -24,4 +28,4 @@ qf_add_static_library(qfengine_common
     "${CMAKE_CURRENT_LIST_DIR}/threading.cc"
     "${CMAKE_CURRENT_LIST_DIR}/threading.hh")
 target_precompile_headers(qfengine_common PUBLIC "${CMAKE_CURRENT_LIST_DIR}/pch.hh")
-target_link_libraries(qfengine_common PUBLIC eigen physfs spdlog thread_pool tomlc99)
+target_link_libraries(qfengine_common PUBLIC eigen physfs spdlog stb thread_pool tomlc99)

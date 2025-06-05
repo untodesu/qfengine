@@ -21,6 +21,7 @@
                 "${workspaceFolder}/external/entt/include",
                 "${workspaceFolder}/external/physfs/include",
                 "${workspaceFolder}/external/spdlog/include",
+                "${workspaceFolder}/external/stb/include",
                 "${workspaceFolder}/external/thread_pool/include",
                 "${workspaceFolder}/external/tomlc99/include",
                 "${workspaceFolder}/modules",

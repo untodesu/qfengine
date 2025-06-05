@@ -2,6 +2,7 @@ add_subdirectory(eigen)
 add_subdirectory(entt)
 add_subdirectory(physfs)
 add_subdirectory(spdlog)
+add_subdirectory(stb)
 add_subdirectory(thread_pool)
 add_subdirectory(tomlc99)
 

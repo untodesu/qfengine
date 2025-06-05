@@ -38,6 +38,9 @@
 
 #include <spdlog/spdlog.h>
 
+#include <stb_image.h>
+#include <stb_image_write.h>
+
 #include <toml.h>
 
 #endif // COMMON_PCH_HH
