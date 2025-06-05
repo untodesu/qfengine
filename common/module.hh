@@ -17,7 +17,6 @@ enum class ModuleCallback : unsigned int {
     FixedUpdateLate,
     Update,
     UpdateLate,
-    Render,
     Layout,
     COUNT
 };

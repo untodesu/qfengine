@@ -12,7 +12,6 @@ void fixedUpdate(void);
 void fixedUpdateLate(void);
 void update(void);
 void updateLate(void);
-void render(void);
 void layout(void);
 } // namespace client_game
 

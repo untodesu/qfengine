@@ -8,6 +8,7 @@
 
 #include "client/game.hh"
 #include "client/globals.hh"
+#include "client/render.hh"
 
 void client::main(void)
 {
@@ -24,21 +25,12 @@ void client::main(void)
 
     qf_force_assert_msg(glfwInit(), "GLFW: glfwInit() failed");
 
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_SAMPLES, 0);
-
-#if defined(__APPLE__)
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+    render_impl::setupWindowing();
 
     globals::window = glfwCreateWindow(640, 480, "QFengine", nullptr, nullptr);
     qf_force_assert_msg(globals::window, "GLFW: glfwCreateWindow() failed");
 
-    glfwMakeContextCurrent(globals::window);
-    glfwSwapInterval(1);
+    render_impl::initialize();
 
     // Setup fixed frametime so that the game doesn't
     // tick until the player joins the game
@@ -65,6 +57,8 @@ void client::main(void)
 
     client_game::initialize();
 
+    render_impl::initializeLate();
+
     std::uint64_t last_curtime = globals::curtime;
     std::uint64_t fixed_accumulator, fixed_frames;
 
@@ -90,15 +84,19 @@ void client::main(void)
 
         last_curtime = globals::curtime;
 
+        render_impl::prepare();
+
         for(std::uint64_t i = 0; i < fixed_frames; ++i)
             client_game::fixedUpdate();
         client_game::update();
 
-        client_game::render();
+        render_impl::renderWorld();
 
         client_game::layout();
 
-        glfwSwapBuffers(globals::window);
+        render_impl::renderImGui();
+
+        render_impl::present();
 
         for(std::uint64_t i = 0; i < fixed_frames; ++i)
             client_game::fixedUpdateLate();
@@ -120,6 +118,8 @@ void client::main(void)
     spdlog::info("client: shutdown after {} frames", globals::framecount);
     spdlog::info("client: average framerate: {:.03f} FPS", 1.0 / globals::frametime_avg);
     spdlog::info("client: average frametime: {:.03f} ms", 1000.0 * globals::frametime_avg);
+
+    render_impl::shutdown();
 
     glfwDestroyWindow(globals::window);
     glfwTerminate();

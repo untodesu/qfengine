@@ -56,11 +56,6 @@ void client_game::updateLate(void)
     client_modules::invoke(qf::ModuleCallback::UpdateLate);
 }
 
-void client_game::render(void)
-{
-    client_modules::invoke(qf::ModuleCallback::Render);
-}
-
 void client_game::layout(void)
 {
     client_modules::invoke(qf::ModuleCallback::Layout);

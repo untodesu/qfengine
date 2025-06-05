@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 project(QFengine LANGUAGES C CXX VERSION 0.0.1)
 
+set(QF_RENDERER_VARIANTS GL VK)
+set(QF_RENDERER GL CACHE STRING "QFengine rendering implementation")
+set_property(CACHE QF_RENDERER PROPERTY STRINGS ${QF_RENDERER_VARIANTS})
+
 ## Add cmake include directories
 list(APPEND CMAKE_MODULE_PATH "cmake")
 
@@ -58,16 +62,27 @@ function(qf_add_static_library target_name)
     qf_setup_target(${target_name})
 endfunction()
 
-## Add dependency libraries
+## Add dependencies
 add_subdirectory(external)
 
 ## Add common engine sources
 add_subdirectory(common)
 
-## Add basic engine sources
+## Add game sources
 add_subdirectory(game/client)
 add_subdirectory(game/server)
 add_subdirectory(game/shared)
+
+if(QF_RENDERER STREQUAL GL)
+    ## Add OpenGL rendering implementation
+    add_subdirectory(render_gl)
+elseif(QF_RENDERER STREQUAL VK)
+    ## Add Vulkan rendering implementation
+    add_subdirectory(render_vk)
+else()
+    ## Whoops, it wasn't configured correctly!
+    message(FATAL_ERROR "Unknown rendering implementation: ${QF_RENDERER}")
+endif()
 
 ## Add engine modules
 add_subdirectory(modules)

@@ -10,4 +10,5 @@ target_precompile_headers(client_game PRIVATE "${CMAKE_CURRENT_LIST_DIR}/pch.hh"
 target_sources(client_game PRIVATE "${PROJECT_BINARY_DIR}/generated_client_modules.cc")
 target_include_directories(client_game PRIVATE "${PROJECT_SOURCE_DIR}/game")
 target_link_libraries(client_game PUBLIC qfengine_common shared_game)
+target_link_libraries(client_game PUBLIC render_impl)
 target_link_libraries(client_game PUBLIC glfw3)
