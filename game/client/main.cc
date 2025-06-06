@@ -9,7 +9,7 @@
 
 #include "client/game.hh"
 #include "client/globals.hh"
-#include "client/render.hh"
+#include "client/render/render.hh"
 
 void client::main(void)
 {
@@ -26,12 +26,12 @@ void client::main(void)
 
     qf_force_assert_msg(glfwInit(), "GLFW: glfwInit() failed");
 
-    render_impl::setupWindowing();
+    render::setupWindowHints();
 
     globals::window = glfwCreateWindow(640, 480, "QFengine", nullptr, nullptr);
     qf_force_assert_msg(globals::window, "GLFW: glfwCreateWindow() failed");
 
-    render_impl::initialize();
+    render::initialize();
 
     // Setup fixed frametime so that the game doesn't
     // tick until the player joins the game
@@ -58,7 +58,7 @@ void client::main(void)
 
     client_game::initialize();
 
-    render_impl::initializeLate();
+    render::initializeLate();
 
     resource::Image icon;
 
@@ -97,19 +97,19 @@ void client::main(void)
 
         last_curtime = globals::curtime;
 
-        render_impl::prepare();
+        render::prepare();
 
         for(std::uint64_t i = 0; i < fixed_frames; ++i)
             client_game::fixedUpdate();
         client_game::update();
 
-        render_impl::renderWorld();
+        render::renderWorld();
 
         client_game::layout();
 
-        render_impl::renderImGui();
+        render::renderImGui();
 
-        render_impl::present();
+        render::present();
 
         for(std::uint64_t i = 0; i < fixed_frames; ++i)
             client_game::fixedUpdateLate();
@@ -132,7 +132,7 @@ void client::main(void)
     spdlog::info("client: average framerate: {:.03f} FPS", 1.0 / globals::frametime_avg);
     spdlog::info("client: average frametime: {:.03f} ms", 1000.0 * globals::frametime_avg);
 
-    render_impl::shutdown();
+    render::shutdown();
 
     glfwDestroyWindow(globals::window);
     glfwTerminate();
